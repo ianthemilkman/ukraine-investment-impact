@@ -1,0 +1,192 @@
+---
+title: "Walkability and Health"
+subtitle: "How the Walkability of US Cities Affects the Health of Its Citizens"
+author: "Bogdan Bunea, Ian Milko, Collin Schwab, and Rayyan Hussien"
+date: September 24, 2023 
+format: 
+  html:
+    toc: true 
+    toc-location: right
+    theme: flatly
+    self-contained: true
+---
+
+```{r}
+#| label: setup 
+#| include: false
+
+# Load libraries and settings here
+library(tidyverse)
+library(here)
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = "figs/", # Folder where rendered plots are saved
+  fig.width = 7.252, # Default plot width
+  fig.height = 4, # Default plot height
+  fig.retina = 3 # For better plot resolution
+)
+
+# Put any other "global" settings here, e.g. a ggplot theme:
+theme_set(theme_bw(base_size = 20))
+
+# Write code below here to load any data used in project
+russia_loses<- read_csv(here::here('data_raw', 'russia_losses_equipment.csv'))
+russia_ploses<- read_csv(here::here('data_raw', 'russia_losses_personnel.csv'))
+
+p <- russia_loses %>%
+    ggplot() +
+    geom_point(aes(x = day, y = APC))
+
+p1 <- russia_ploses %>%
+    ggplot() +
+    geom_point(aes(x = day, y = personnel))
+
+```
+
+
+Research Question: 
+
+How does the walkability of American cities affect the health of American citizens? 
+
+Through this question, we aim to assess the walkability of various American cities in relation to health factors such as obesity, Alzheimer's disease, and depression. Walkability will be defined as the ease of pedestrian, biking, and public transportation access within a city.
+
+
+
+Data Sources:
+
+Until now, we have found 6 sources:
+
+**1. Mass Transit Info:**
+
+https://catalog.data.gov/dataset/monthly-modal-time-series
+
+The dataset above originates from the Department of Transportation and contains data on various transportation modes. Its credibility is established by its source, the DOT, and its relevance to assessing city walkability.
+
+
+**2. Alzheimer's Disease and Healthy Aging Data**
+
+https://catalog.data.gov/dataset/alzheimers-disease-and-healthy-aging-data
+
+This CDC study, part of BRFSS, gathered data through telephone surveys across the US to explore the link between physical activity (a key aspect of walkability) and Alzheimer's disease. It's credible and pertinent, being sourced from the CDC's BRFSS.
+
+
+**3. U.S. Chronic Disease Indicators (CDI)**
+
+https://catalog.data.gov/dataset/u-s-chronic-disease-indicators-cdi
+
+The link above leads to a CDC dataset with 124 indicators for collecting chronic disease data in states and metropolitan areas. It's reliable and relevant, being produced by the CDC and providing insights into these regions' chronic disease information.
+
+**4. City Walkability in America**
+
+https://catalog.data.gov/dataset/walkability-index1
+
+The link above leads to a dataset, produced by the EPA, examines urban features that influence walking as a travel choice. It's relevant and credible for our research on walkability due to its source at the EPA.
+
+
+**5. Nutrition, Physical Activity, and Obesity - Behavioral Risk Factor Surveillance System**
+
+https://catalog.data.gov/dataset/nutrition-physical-activity-and-obesity-behavioral-risk-factor-surveillance-system
+
+The link above leads to a dataset, sourced from the BRFSS, covers diet, physical activity, and weight status. It's valuable for assessing how walkability influences physical activity and health. It's also reliable since it's from the BRFSS.
+
+**6. National Obesity by State**
+
+https://catalog.data.gov/dataset/national-obesity-by-state-d765a
+
+The link above leads to a data set that displays obesity rates across U.S. states. It is credible and pertinent as it originates from the CDC's BRFSS and provides information on obesity rates in the United States.
+
+
+
+Anticipated Results:
+
+Two possible variables can be a Walk ability Score and Health Outcomes.
+
+**1.** Walk ability Score: This variable would measure the walkability of various U.S. cities, potentially on a scale ranging from 0 to 100 (could change), and the higher the score is, the greater the walkability in that city is. The distribution across cities could potentially follow a unimodal distribution, where most cities would be in the middle range and a few have very low or very high scores.
+
+**2.** Health Outocomes: This variable would include diverse health measures, including factors like obesity rates, diabetes prevalence, and mental health scores, all combined for each city. The distribution of health outcomes could potentially be multimodal. Some cities may experience low health issues, while others could experience high rates of health issues. Therefore, we would expect cluster of cities sharing similar health outcomes, leading to several peaks in the distribution.
+
+
+Relationship between variables:
+
+**1.** Walkability Score and Physical Activity: We expect there to be a positive correlation between these two variables. Since, cities with a higher walkability score (cities that have easier access to walking, biking, or even public transportation), would help encourage higher levels of physical activity. So, we might find a positive correlation between the Walkability Score and Physical Activity, meaning that the as the walkability score increases, the physical activity levels are expected to increase.
+
+**2.** Walkability Score and Health Issues: We expect there to be a negative correlation between these two variables. Thus, cities with a higher walkability score might have a lower rates of health issues. That's since, citites with a higher walkability score would encourage the people to be more physically active. Also, as the walkability score increases, the health issues rates decreases.
+
+
+Two Charts:
+
+**1.** A scatterplot comparing walkability scores and physical activity levels in different U.S. cities could be valuable for visualizing the degree of correlation between these variables. This chart would help assess whether cities with higher walkability scores tend to have increased physical activity.
+
+**2.** A bar chart contrasting walkability score categories (e.g., Low, Moderate, High) with obesity rates/health issues in different U.S. cities could provide a clear visual representation of the relationship between walkability and obesity/health issues. This chart would enable us to examine if cities with better walkability scores tend to have lower obesity rates/ health issues among residents.
+
+
+Expected correlations between chosen variables guide the research question and analysis. These hypotheses shape the research focus and potential findings.
+
+**1.** Expecting a positive link between walkability scores and physical activity levels suggests that pedestrian-friendly cities may encourage more exercise, impacting urban planning and health strategies. 
+
+**2.** Expecting a negative connection between walkability scores and obesity rates/health issues highlights the role of walkability in addressing public health issues.
+
+
+ALL MEMBERS CONTRIBITED EQUALLY 
+
+
+
+> NOTE: **You should delete all of the text below this line, including this line before submitting - all of the text below is just here as a helpful guide**
+
+# Settings 
+
+Make sure you update the settings in the YAML for your report (the part at the very top between the "---" symbols). Update the title, subtitle, name, date, and even the theme if you wish.
+
+Also note that I've added `code_folding: hide` to the settings - this adds a drop-down menu at the very top so that your code chunks can be hidden or shown on command. It makes for a nice, more polished report. 
+
+# Template structure 
+
+## Folders
+
+There are four folders in this template:
+
+1. `data_raw`: This is where you should put all of your "raw" data used in your analysis. **Put the files there, then NEVER touch them again.** Opening the raw file in a program like Microsoft Excel can (and often will) corrupt your data file. If you feel you _must_ open the data file in Excel to look at it, then create a copy of the raw data, open and look at the _copy_, then **DELETE IT**. This will leave your "raw" data untouched and uncorrupted.
+
+2. `data_processed`: If you create any processed or "cleaned" up data frames in R that you want to export, save them in this folder. This can be helpful, for example, if the data processing takes a long time to run. In that case, you might want to create a separate .R file called `clean_data.R` (or something like that) where you clean and save the data. Then you can just read in the pre-processed data from the `data_processed` folder.
+
+3. `figs`: This is where any chart you create inside a code chunk will be saved.
+
+4. `images`: Sometimes you'll want to include images other than those generated by code in your report - put those here. For example, I put the class sticker called `logo.png` in this folder.
+
+## Files
+
+There are three files:
+
+1. `report.Rproj`: Open this whenever working on your project to make sure that you are in the correct working directory.
+
+2. `report.qmd`: (i.e. this file) Write your report in this file. Write code and text together, then compile it to a single html file that you can then share with others to communicate your analysis.
+
+3. `report.html`: This is the compiled report. Once you're done writing your `report.qmd` file, click the "knit" button in RStudio to create this file.
+
+# Writing your report
+
+Use [markdown](https://commonmark.org/help/) to format your document, e.g. use the `#` symbol for a level 1 header, the `##` symbol for a level 2 header, etc. 
+
+Run R code using chunks like this:
+
+```{r}
+head(mtcars)
+```
+
+Create charts and change the name and dimensions by changing the chunk settings, like this:
+
+```{r scatterplot, fig.width=7, fig.height=4}
+ggplot(mtcars) + 
+    geom_point(aes(x = mpg, y = hp))
+```
+
+Finally, if you want to insert an image in the `images` folder, you can insert it using html code like this: 
+
+<center>
+<img src="images/logo.png" width=150>
+</center>
+
+The code `<center>` and `</center>` just puts the image in the center of the page, the `src=""` part defines the path to the image, and the `width=300` part defines the image width in pixels - use that to adjust the image size in your report.
