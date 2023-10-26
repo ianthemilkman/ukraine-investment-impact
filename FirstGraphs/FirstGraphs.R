@@ -1,17 +1,19 @@
 library(tidyverse)
 library(here)
 library(lubridate)
-
+library(cowplot)
 
 
 russia_personnel <- read_csv(here('data', 'russia_losses_personnel.csv'))
 russia_equipment <- read_csv(here('data', 'russia_losses_equipment.csv'))
 
 
-data <- data.frame(russia_personel$personnel)
-casuality <- diff(data$russia_personel.personnel)
+data <- data.frame(russia_personnel$personnel)
+casuality <- diff(data$russia_personnel.personnel)
 max_jump <- max(casuality)
-day_of_max <- russia_personel$date[which.max(casuality)]
+day_of_max <- russia_personnel$date[which.max(casuality)]
+
+
 
 
 
@@ -26,13 +28,13 @@ russia_personnel %>%
     theme_minimal_grid(font_size = 10) +
     theme(legend.position = "none") +
     scale_y_continuous(labels = scales::comma_format(scale = 1e-3))
-    
+
 
 russia_equipment %>%
     ggplot() +
     geom_line(aes(x = day, y = tank, color = "tank")) +
     geom_line(aes(x = day, y = APC, color = "APC")) +
-    theme_minimal_grid(font_size = 10) + 
+    theme_minimal_grid(font_size = 10) +
     labs(
         title= "Russian Armoured Vehicle Losses since the start of the Russo-Ukrain War",
         x = "Days since the beginning of the war",
@@ -72,4 +74,4 @@ russia_equipment %>%
 
 
 
-    
+
