@@ -1,13 +1,15 @@
 ---
-title: "Walkability and Health"
-subtitle: "How the Walkability of US Cities Affects the Health of Its Citizens"
+title: "Funding the War in Ukraine"
+subtitle: "How Western Funding Influenced the War in Ukraine"
 author: "Bogdan Bunea, Ian Milko, Collin Schwab, and Rayyan Hussien"
-date: September 24, 2023 
+date: October 29, 2023
 format: 
   html:
     toc: true 
     toc-location: right
-    theme: flatly
+    theme: zephyr
+    code-fold: true
+    code-tools: true
     self-contained: true
 ---
 
@@ -18,14 +20,19 @@ format:
 # Load libraries and settings here
 library(tidyverse)
 library(here)
+library(cowplot)
+library(gganimate)
+library(ggrepel)
+library(lubridate)
+library(janitor)
 
 knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   comment = "#>",
   fig.path = "figs/", # Folder where rendered plots are saved
-  fig.width = 7.252, # Default plot width
-  fig.height = 4, # Default plot height
+  fig.width = 10, # Default plot width
+  fig.height = 6, # Default plot height
   fig.retina = 3 # For better plot resolution
 )
 
@@ -33,67 +40,215 @@ knitr::opts_chunk$set(
 theme_set(theme_bw(base_size = 20))
 
 # Write code below here to load any data used in project
-russia_losses_equipment<- read_csv(here('data_raw', 'russia_losses_equipment.csv'))
-russia_losses_personnel<- read_csv(here('data_raw', 'russia_losses_personnel.csv'))
-
-p <- russia_losses_equipment %>%
-    ggplot() +
-    geom_point(aes(x = day, y = APC))
-p
-
-p1 <- russia_losses_personnel %>%
-    ggplot() +
-    geom_point(aes(x = day, y = personnel))
-p1
 
 ```
 
+# Research Question
 
-## Research Question
+What link exists between the amount of foreign military aid to Ukraine and military personnel and equipment losses for both sides.
 
-What, if any, correlation exists between the amount of foreign military aid to Ukraine and military personnel and equipment losses for both sides?
-
-Through this question, we aim to show if a foreign military aid to Ukraine has had an impact on their ability to destroy the enemy, and if there is, is that newfound ability significant enough to give them an advantage in the war.
-
-
-## Data Sources
-
-1. 2022 Russia-Ukraine War
-
-   <https://github.com/leedrake5/Russia-Ukraine/graphs/commit-activity>
-
-   This dataset, found on GitHub, is an adaptation of 
-
-## Anticipated Results
-
-Two possible variables can be a Walk ability Score and Health Outcomes.
-
-**1.** Walk ability Score: This variable would measure the walkability of various U.S. cities, potentially on a scale ranging from 0 to 100 (could change), and the higher the score is, the greater the walkability in that city is. The distribution across cities could potentially follow a unimodal distribution, where most cities would be in the middle range and a few have very low or very high scores.
-
-**2.** Health Outocomes: This variable would include diverse health measures, including factors like obesity rates, diabetes prevalence, and mental health scores, all combined for each city. The distribution of health outcomes could potentially be multimodal. Some cities may experience low health issues, while others could experience high rates of health issues. Therefore, we would expect cluster of cities sharing similar health outcomes, leading to several peaks in the distribution.
+Through this question, we aim to assess how foreign add has affected Ukrainian and Russain casualties. We also plan to compare how land has changed hands since the introduction of Western aid.
 
 
-Relationship between variables:
-
-**1.** Walkability Score and Physical Activity: We expect there to be a positive correlation between these two variables. Since, cities with a higher walkability score (cities that have easier access to walking, biking, or even public transportation), would help encourage higher levels of physical activity. So, we might find a positive correlation between the Walkability Score and Physical Activity, meaning that the as the walkability score increases, the physical activity levels are expected to increase.
-
-**2.** Walkability Score and Health Issues: We expect there to be a negative correlation between these two variables. Thus, cities with a higher walkability score might have a lower rates of health issues. That's since, citites with a higher walkability score would encourage the people to be more physically active. Also, as the walkability score increases, the health issues rates decreases.
+# Data Sources
 
 
-Two Charts:
+1. <https://www.kaggle.com/datasets/febinphilips/us-weapons-export-dataset>
 
-**1.** A scatterplot comparing walkability scores and physical activity levels in different U.S. cities could be valuable for visualizing the degree of correlation between these variables. This chart would help assess whether cities with higher walkability scores tend to have increased physical activity.
+The above dataset provides the USA's arms and weapons sales data to different countries from 1996 - 2022. The creator of the dataset does not list the their sources, so the dataset is suspect. However, different news sources do corroborate the data set, so we are confident enough to use the data set.
 
-**2.** A bar chart contrasting walkability score categories (e.g., Low, Moderate, High) with obesity rates/health issues in different U.S. cities could provide a clear visual representation of the relationship between walkability and obesity/health issues. This chart would enable us to examine if cities with better walkability scores tend to have lower obesity rates/ health issues among residents.
+2. <https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war>
+
+The above dataset describes equipment losses, personnel casualties, and POWs of the Russians in 2022 in the war in Ukraine. This data was compiled from the Ukrainian Defence Ministry, Oryxspioenkop, and different interactive maps. Oryxpioenkop is a common source for Ukraine War related statistics on the internet. It is important to remember that most if not all statistics regarding the war will be tainted by attempts of propoganda by both sides and a fog of war that will make it nearly impossible to determine with 100% accuracy the veracity of this data.
+
+3. <https://github.com/leedrake5/Russia-Ukraine/tree/main/data/byType>
+
+Using Oryx's site, github user leedrake5 compiled the above information to use to visualzie Russia's equipment losses. It is important to remember that most if not all statistics regarding the war will be tainted by attempts of propoganda by both sides and are obscured by a fog of war that will make it nearly impossible to determine the veracity of this data.
+
+4. <https://www.ifw-kiel.de/publications/ukraine-support-tracker-data-20758/>
+
+The above data is a listing of foreign aid sent to Ukraine. This is split between military, humanitarian, and financial aid. The source of this document is the Kiel Institute for the World Economy, which operates in part as an academic publisher. This information should be seen as trustworthy, as it is taken from statements of the donor countries themselves as they give aid. It should be taken with a slight grain of salt, however, as the donation of greater funds can be used propogandistically to make the donor country look better.
 
 
-Expected correlations between chosen variables guide the research question and analysis. These hypotheses shape the research focus and potential findings.
+# Proposal Expectations
 
-**1.** Expecting a positive link between walkability scores and physical activity levels suggests that pedestrian-friendly cities may encourage more exercise, impacting urban planning and health strategies. 
+When creating a graph that shows the cumulative losses of Russian troops since day 1 of the war, although the first 200 days of the war were deadly in their own respect you can see that after the 200 day mark of the war (September 12, 2022) the slope of the line drastically increases and has been maintained that way since that 200 day mark.
 
-**2.** Expecting a negative connection between walkability scores and obesity rates/health issues highlights the role of walkability in addressing public health issues.
+Around this time in September 2022, you begin to see large amounts of “heavy equipment” being delivered to Ukraine, such as: Belgium delivering 40 Armored Personnel Carriers, Germany delivering 46 Anti-Air Weapons, Artillery from Lithuania, 600 rockets from Luxembourg, and many more. This is just a small set of “heavy” arms deliveries from relatively minor nations (excluding Germany) and from September onwards delivery of heavy weapon systems only increased.
+
+Creating a quick filter we can see that in the first 200 days of the way Russia suffers approximately 52,650 casualties, but from days 200-400 Russia suffers approximately 120,250 casualties. This drastic increase can be attributed to Russian wave offensives that occurred during this time, such as the battle of Bakmut, but western weapons were responsible for inflicting mass amounts of casualties.
+
+We believe that there is evidence that western weapons have made an impact on Russian casualties throughout the war, and further on into this report we will look deeper into specific battles; specifically the Ukrainian counter offensive to see if Ukrainian casualties have a lower slope than Russian offensives that occurred earlier in the war.
+	
+# Preliminary Charts
+
+## Chart 1: Foreign Military Aid to Ukraine
+
+```{r}
+
+aid <- read.csv(here('data_raw','World Wide Aid.csv'))
+
+aid_tib <- aid %>%
+    tibble() %>%
+    clean_names() %>%
+    select(!c(contains(c('x', 'dummy', 'in_kind')), 'items')) %>%
+    rename(monetary_value_source = monetary_value_as_given_by_source) %>%
+    select(countries, type_of_aid_general, total_in_usd) %>%
+    mutate(total_usd = parse_number(total_in_usd)) %>%
+    filter(!is.na(total_usd)) %>%
+    filter(type_of_aid_general == "Military") %>%
+    group_by(countries) %>%
+    summarize(total_by_country = sum(total_usd))
+
+top_categories <- aid_tib %>%
+    arrange(desc(total_by_country)) %>%
+    top_n(10, wt = total_by_country) %>%
+    pull(countries)
+
+aid_tib <- aid_tib %>%
+    mutate(countries = fct_other(countries, keep = top_categories, other_level = "Other"))
+
+aid_plot <- aid_tib %>%
+    ggplot() +
+    geom_col(
+        aes(
+            x = total_by_country / 10^9,
+            y = reorder(countries, total_by_country)
+            )) +
+    labs(x = "Total Military Aid (Billions of $)", y = "", title = "Foreign Military Aid to Ukraine", subtitle = "Top 10 Countries")+
+    theme_bw()
+aid_plot
+
+aid1 <- aid %>% 
+    filter(Type.of.Aid.General == "Military") %>% 
+    select(Countries, Original.Currency,Type.of.Aid.General, Monetary.Value.as.Given.by.Source, Total, Converted.Value.in.EUR, Total.monetary.value.delivered.in.EUR, Total_in_USD) %>% 
+    filter(Total != "") %>% 
+    filter(Total != ".") %>% 
+    group_by(Countries) %>% 
+    mutate(Total_in_USD = as.double(Total_in_USD)) %>% 
+    mutate(Total_by_Country = sum(Total_in_USD)) %>% 
+    ungroup()
+aid2 <- aid1 %>% 
+    select(Countries, Total_by_Country) %>% 
+    slice(1, 13, 14,28,31,56,63,91,103,113,125,131,145,149,150,157,161,165,170,189,196,206,213,221,227,237,240,242,254,258,271,284,299,307)
+aid2 %>% 
+    mutate(Total_by_Country = Total_by_Country / 10^9) %>% 
+    mutate(Countries = fct_reorder(Countries, Total_by_Country)) %>% 
+    ggplot()+
+    geom_col(aes(x = Total_by_Country, y = Countries)) +
+    labs(x = "Total Military Aid (Billions of $)", y = "", title = "Foreign Military Aid to Ukraine")+
+    theme_bw()+
+    scale_x_continuous(expand = expansion(mult = c(0, 0.05)))
+```
+
+## Chart 2: Ukrainian and Russian Equipment Casualties
+
+```{r}
+
+cas <- read.csv(here('data_raw','Total_Cas.csv'))
+cas1 <- cas %>% 
+    mutate(color = (country == "Russia")) %>% 
+    group_by(country)
+
+cas1 %>%
+    mutate(date = mdy(Date)) %>%
+    ungroup() %>%
+    ggplot(aes(x = date, y = type_total)) +
+    geom_point(aes(color = country), size = 3) +
+    geom_line(aes(color = country), linewidth = 1) +
+    geom_text_repel(
+        data = cas1 %>%
+            filter(type_total == max(type_total)),
+        aes(x = mdy(Date), y = type_total, label = country),
+        nudge_y = 800,
+        size = 5,
+        segment.color = NA
+        ) +
+    scale_color_manual(values = c('red', 'blue')) +
+    scale_x_date(guide = guide_axis(angle = 45),
+        expand = expansion(add = c(20, 20)),
+        date_labels = "%b %y",
+        date_breaks = '1 month') +
+    labs(
+        x = "Total Equipment Casualties",
+        y = "",
+        title = "Ukrainian and Russian Equipment Casualties"
+        ) +
+    theme_minimal_vgrid() +
+    theme(
+        legend.position = 'none',
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank()
+    )
+
+```
+
+# Data Dictionary
+    
+## Aid (World Wide Aid.csv)
+
+- **ID:** Identification code for each line item.	
+- **Countries:** The donating country.	
+- **Announcement Date:** The date the aid was announced.
+- **Type of Aid General:** The type of aid granted; either humanitarian, financial, or military.
+- **Type of Aid Specific:** A more specific description of the aid granted.	
+- **Explanation:** An explanation of the aid from the data sets authors perspective.	
+- **Original Currency:** The currency in which the aid was given.
+- **Monetary Value as Given by Source:** The monetary value of the aid as announced by the donor.	
+- **Items:** A list of the donated items if not strictly currency.
+- **Type of Item:** Further classification of donated items for filtering purposes.	
+- **Sub-type of Item:** Even further classification of donated items for filtering purposes.
+- **No. of Units:** Number of units (as detailed in the items column) announced for donation.
+- **No. of Units Delivered (in-kind military aid):** Actual number of units delivered.
+- **Unit Price in USD:** Price of 1 item in US dollars.
+- **Total:** Total monetary value of aid in the original currency.
+- **Converted Value in EUR:** Total monetary value of pledged aid in euros.
+- **Total Monetary Value Delivered in EUR:** Total monetary value of delivered aid in euros.
+- **Official Source:** Says whether there is an official for the aid announcement.
+- **Source of Aid 1:** News source or statement from donor country detailing the aid.
+- **Source of Aid 2:** News source or statement from donor country detailing the aid.
+- **Source of Aid 3:** News source or statement from donor country detailing the aid.
+- **Source of Aid 4:** News source or statement from donor country detailing the aid.	
+- **Bilateral loan/grant made through IMF or WB?:** Lists whether the aid is a donation or grant from the International Monetary Fund or World Bank (0 for false, 1 for true).
+- **Updated/newly added entry:** Lists whether the entry was added in the most recent update to the data set (0 for false, 1 for true).
+- **Deliveries = Commitments (1=yes, 0=no):** Lists whether the delivered aid matches the commitment.	
+- **Official delivery source (1=yes, 0=no):** Lists whether there is an official source confirming delivery of the aid.
+- **Source for Delivery:** The news source or statement confirming the delivery of the aid.
+- **Earmarked year:** The fiscal year in which the aid was to budgeted.
+- **Relative importance (2=very important, 1=important, 0=less important):** A subjective rating of the importance of the aid as provided by the data sets authors.
+- **Official Source Yes/No Dummy:** A redundant column for the Official Source column.
+- **Total_in_USD:** The total aid donated in US Dollars.
+
+## Equipment Casualties (Total_Cas.csv)
+
+- **country:** The country whose equipment casualties are being listed (Russia or Ukraine).
+- **equipment_type:** The type of equipment lost.
+- **destroyed:** A number showing how many of the designated equipment were destroyed.	
+- **abandoned:** A number showing how many of the designated equipment were abandoned.	
+- **captured:** A number showing how many of the designated equipment were captured.
+- **damaged:** A number showing how many of the designated equipment were destroyed.
+- **type_total:** A cumulative total of the amount of equipment casualties sustained.
+- **Date:** The date on which the data set was updated with the row's information.
+
+## Personnel Casualties (russia_losses_personnel.csv)
+
+- **date:** The date on which the casualties were reported.
+- **day:** The day of the war.
+- **personnel:** The number of personnel casualties.	
+- **personnel\:** Denotes the accuracy of the previous column.	
+- **POW:** The number of Prisoners of War taken on the designated day.
+
+## United States Arm Sales (ArmsSales(Kaggle).csv)
+
+- **Country:** Country names
+- **Year:** The year the during which the sales occurred.
+- **Deliveries:** The total US dollar amount of sales.
+- **Authorizations:** The share of deliveries that were commercial sales.
+- **Notifications:** The share of deliveries that were foreign military sales.
 
 
 ALL MEMBERS CONTRIBITED EQUALLY 
+
+
 
 
