@@ -1,4 +1,4 @@
-```{r]}
+```{r}
 library(tidyverse)
 library(here)
 library(cowplot)

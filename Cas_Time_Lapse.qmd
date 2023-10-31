@@ -1,4 +1,4 @@
-```{r]}
+```{r}
 library(cowplot)
 library(tidyverse)
 library(viridis)
@@ -11,11 +11,11 @@ library(here)
 cas <- read.csv(here('data_raw','Total_Cas.csv'))
 
 View(cas)
-glimpse(cas1)
 
 cas1 <- cas %>% 
     mutate(color = (country == "Russia")) %>% 
     group_by(country)
+glimpse(cas1)
 
 cas1 %>% 
     mutate(Date = fct_inorder(Date, TRUE)) %>% 
