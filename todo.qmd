@@ -1,0 +1,10 @@
+---
+title: "Task management bulletin"
+subtitle: "Tasks to be done, in progress, or completed."
+
+---
+
+1. Address spelling in file names and variables
+   - do we want to correct them?
+2. Verify and codify data sources
+
