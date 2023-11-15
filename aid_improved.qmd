@@ -1,0 +1,150 @@
+---
+title: "Aid analysis improved"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-location: right
+    theme: zephyr
+    code-fold: true
+    code-tools: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(here)
+library(readxl)
+library(cowplot)
+library(janitor)
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = "figs/", # Folder where rendered plots are saved
+  fig.width = 10, # Default plot width
+  fig.height = 6, # Default plot height
+  fig.retina = 3 # For better plot resolution
+)
+
+plotSave <- function(name, chart) {
+    ggsave(filename = here('plots', paste0({{ name }}, '.jpeg')),
+        plot   = {{ chart }},
+        width  = 11,
+        height = 6)
+}
+
+```
+
+# Aid Committed by Country
+
+Data source: <https://www.ifw-kiel.de/publications/ukraine-support-tracker-data-20758/>
+
+```{r}
+#| label: aid-committed
+#start
+
+aid_data <- read_xlsx(here('data_raw', 'world_wide_aid_2.xlsx'), sheet = "Bilateral Assistance, MAIN DATA", range = cell_cols("A:T")) %>%
+    tibble() %>%
+    clean_names() %>%
+    rename(val_dlvrd_usd = value_delivered_own_estimate_in_usd) %>%
+    rename(val_cmtd_usd = value_committed_own_estimate_in_usd) %>%
+    mutate(amt_dlvrd_usd = as.numeric(val_dlvrd_usd),
+        amt_cmtd_usd = as.numeric(val_cmtd_usd))
+
+aid2 <- aid_data %>%
+    filter(!is.na(amt_cmtd_usd)) %>%
+    filter(type_of_aid_general == "Military") %>%
+    group_by(countries) %>%
+    summarize(total_by_country = sum(amt_cmtd_usd))
+
+top_categories <- aid2 %>%
+    arrange(desc(total_by_country)) %>%
+    top_n(5, wt = total_by_country) %>%
+    pull(countries)
+
+aid2 <- aid2 %>%
+    mutate(countries = fct_other(countries, keep = top_categories, other_level = "Other"))
+
+aid2_plot <- aid2 %>%
+    ggplot() +
+    geom_col(
+        aes(
+            x = total_by_country / 10^9,
+            y = reorder(countries, total_by_country)
+            )) +
+    labs(
+        x = "Total Military Aid Commited (Billions of $)",
+        y = "",
+        title = "Committed Foreign Military Aid to Ukraine",
+        subtitle = "Top 10 Countries"
+        ) +
+    theme_bw()
+aid2_plot
+
+#end
+```
+
+# Aid Timeline
+
+```{r}
+#start
+
+timeline <- read_csv(here('data_raw', 'us_aid_timeline.csv'))
+
+#end
+```
+
+# Maybe: Aid Delivered by Country
+
+Data source: `World Wide Aid.csv`
+
+```{r}
+#| label: aid-plot-1
+#start
+
+aid <- read.csv(here('data_raw','World Wide Aid.csv'))
+
+aid_tib <- aid %>%
+    tibble() %>%
+    clean_names() %>%
+    select(!c(contains(c('x', 'dummy', 'in_kind')), 'items')) %>%
+    rename(monetary_value_source = monetary_value_as_given_by_source) %>%
+    select(countries, type_of_aid_general, total_in_usd) %>%
+    mutate(total_usd = parse_number(total_in_usd)) %>%
+    filter(!is.na(total_usd)) %>%
+    filter(type_of_aid_general == "Military") %>%
+    group_by(countries) %>%
+    summarize(total_by_country = sum(total_usd))
+
+top_categories <- aid_tib %>%
+    arrange(desc(total_by_country)) %>%
+    top_n(10, wt = total_by_country) %>%
+    pull(countries)
+
+aid_tib <- aid_tib %>%
+    mutate(countries = fct_other(countries, keep = top_categories, other_level = "Other"))
+
+aid_plot <- aid_tib %>%
+    ggplot() +
+    geom_col(
+        aes(
+            x = total_by_country / 10^9,
+            y = reorder(countries, total_by_country)
+            )) +
+    labs(x = "Total Military Aid (Billions of $)", y = "", title = "Foreign Military Aid to Ukraine", subtitle = "Top 10 Countries")+
+    theme_bw()
+aid_plot
+
+#end
+```
+
+```{r}
+#| eval: false
+#| include: false
+plotSave('aid_plot', aid_plot)
+plotSave('aid_cmtd_plot', aid2_plot)
+```

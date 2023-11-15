@@ -1,12 +1,32 @@
+---
+title: "Aid analysis"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-location: right
+---
+
 ```{r}
+#| label: setup
+#| include: false
+
 library(tidyverse)
 library(here)
 library(cowplot)
 
+plotSave <- function(name, chart) {
+    ggsave(filename = here('plots', paste0({{ name }}, '.jpeg')),
+        plot   = {{ chart }},
+        width  = 11,
+        height = 6)
+}
+
+```
+
+```{r}
 
 aid <- read.csv(here('data_raw','World Wide Aid.csv'))
-
-View(aid)
 
 aid1 <- aid %>% 
     filter(Type.of.Aid.General == "Military") %>% 
@@ -17,19 +37,14 @@ aid1 <- aid %>%
     mutate(Total_in_USD = as.double(Total_in_USD)) %>% 
     mutate(Total_by_Country = sum(Total_in_USD)) %>% 
     ungroup()
-
-
+head(aid1)
 
 aid2 <- aid1 %>% 
     select(Countries, Total_by_Country) %>% 
     slice(1, 13, 14,28,31,56,63,91,103,113,125,131,145,149,150,157,161,165,170,189,196,206,213,221,227,237,240,242,254,258,271,284,299,307)
+head(aid2)
 
-View(aid2)
-
-glimpse(aid1)
-View(aid1)
-
-aid2 %>% 
+aid2_plot <- aid2 %>% 
     mutate(Total_by_Country = Total_by_Country / 10^9) %>% 
     mutate(Countries = fct_reorder(Countries, Total_by_Country)) %>% 
     ggplot()+
@@ -37,11 +52,14 @@ aid2 %>%
     labs(x = "Total Military Aid (Billions of $)", y = "", title = "Foreign Military Aid to Ukraine")+
     theme_bw()+
     scale_x_continuous(expand = expansion(mult = c(0, 0.05)))
-    
-View(aid)
-    
+aid2_plot
 
+```
+
+```{r}
+#| eval: false
+#| include: false
+
+plotSave('aid2_plot', aid2_plot)
     
-
-
 ```

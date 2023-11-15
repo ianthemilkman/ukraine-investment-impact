@@ -1,0 +1,40 @@
+title,heading_of_title,section_of_heading,paragraph_of_section,amount_mil_usd
+2,Department of Defense,Miltary Personnel,Army,12.75
+2,Department of Defense,Miltary Personnel,Navy,0.04
+2,Department of Defense,Miltary Personnel,Marine Corps,0.68
+2,Department of Defense,Miltary Personnel,Air Force,1.59
+2,Department of Defense,Operation and Mainenance,Army,1493.53
+2,Department of Defense,Operation and Mainenance,Navy,939.78
+2,Department of Defense,Operation and Mainenance,Air Force,195.26
+2,Department of Defense,Operation and Mainenance,Space Force,0.80
+2,Department of Defense,Operation and Mainenance,Defense-Wide,15256.82
+2,Department of Defense,Procurement,Missile Procurement (Army),350.97
+2,Department of Defense,Procurement,Procurement of Weapons and Tracked Vehicles (Army),0.26
+2,Department of Defense,Procurement,Procurement of Ammunition (Army),0.05
+2,Department of Defense,Procurement,Other Procurement (Army),113.44
+2,Department of Defense,Procurement,Other Procurement (Navy),1.25
+2,Department of Defense,Procurement,Aircraft Procurement (Air Force),28.50
+2,Department of Defense,Procurement,Other Procurement (Air Force),155.38
+2,Department of Defense,Procurement,Procurement (Defense-Wide),24.22
+2,Department of Defense,Procurement,Defense Production Act Purchases,600.00
+2,Department of Defense,"Research, Development, Test and Evaluation",Army,128.70
+2,Department of Defense,"Research, Development, Test and Evaluation",Navy,43.00
+2,Department of Defense,"Research, Development, Test and Evaluation",Air Force,119.82
+2,Department of Defense,"Research, Development, Test and Evaluation",Defense-Wide,72.10
+3,Independent Agencies,Nuclear Regulatory Commission,Salaries and Expenses,2.00
+4,Department of Health and Human Services,Centers for Disease Control and Prevention,CDC-Wide Activities and Program Support,54.00
+4,Department of Health and Human Services,Administration for Children and Families,Refugee and Entrant Assistance,900.00
+5,Department of State and Related Agency Department of State,Administration of Foreign Affairs,Diplomatic Programs,190.00
+5,Department of State and Related Agency Department of State,Administration of Foreign Affairs,Capital Investment Fund,10.00
+5,Department of State and Related Agency Department of State,Administration of Foreign Affairs,Office of Inspector General,4.00
+5,Department of State and Related Agency Department of State,Administration of Foreign Affairs,"Embassy Security, Construction, and Maintenance",110.00
+5,United States Agency for International Development,Funds Appropriated to the President,Operating Expenses,17.00
+5,United States Agency for International Development,Funds Appropriated to the President,Office of Inspector General,1.00
+5,Bilateral Economic Assistance,Funds Appropriated to the President,International Disaster Assistance,4348.00
+5,Bilateral Economic Assistance,Funds Appropriated to the President,Economic Support Fund,8766.00
+5,Bilateral Economic Assistance,Department of State,Migration and Refugee Assistance,350.00
+5,International Security Assistance,Department of State,International Narcotics Control and Law Enforcement,400.00
+5,International Security Assistance,Department of State,"Nonproliferation, Anti-Terrorism, Demining and Related Programs",100.00
+5,International Security Assistance,Funds Appropriated to the President,Foreign Military Financing Program,4000.00
+5,Multilateral Assistance,International Financial Institutions,Contribution to the European Bank for Reconstruction and Development,500.00
+6,General Provisions,This Act,Transfer of funds,52.00

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-11-12">
+
+<title>Data README</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#additional-ukraine-supplemental-appropriations-act-2022" id="toc-additional-ukraine-supplemental-appropriations-act-2022" class="nav-link active" data-scroll-target="#additional-ukraine-supplemental-appropriations-act-2022">Additional Ukraine Supplemental Appropriations Act, 2022</a></li>
+  <li><a href="#us-aid-timeline" id="toc-us-aid-timeline" class="nav-link" data-scroll-target="#us-aid-timeline">US Aid Timeline</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data README</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 12, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="additional-ukraine-supplemental-appropriations-act-2022" class="level1">
+<h1>Additional Ukraine Supplemental Appropriations Act, 2022</h1>
+<section id="appropriations_hr7691_data.csv" class="level4">
+<h4 class="anchored" data-anchor-id="appropriations_hr7691_data.csv">appropriations_hr7691_data.csv</h4>
+<hr>
+<p><strong>File name:</strong> appropriations_hr7691_data.csv</p>
+<p><strong>Date created:</strong> 2023-11-10</p>
+<p><strong>Author:</strong> Ian Milko</p>
+<p><strong>Data source:</strong> <a href="https://www.congress.gov/117/plaws/publ128/PLAW-117publ128.pdf" class="uri">https://www.congress.gov/117/plaws/publ128/PLAW-117publ128.pdf</a></p>
+<p><strong>Data last updated:</strong> 2022-05-21</p>
+<p><strong>Description:</strong> A summary of all funding appropriations relevant to the Ukraine conflict found in H.R. 7691 - Additional Ukraine Supplemental Appropriations Act, 2022. The data was compiled by reading through the bill and thus categorizing each amount by the title number within the bill, the heading within the title, the name of the section within the heading, and name of the paragraph within the section. Three entries from the bill were omitted from the dataset due to their lack of relevance to Ukrainian aid. These omitted entries totaled $170,174,000, which I regard as insignificant considering the total appropriations in the bill sum to over $40,000,000,000.</p>
+<p><strong>Data dictionary:</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>title:</code></td>
+<td>Title number within bill.</td>
+</tr>
+<tr class="even">
+<td><code>heading_of_title:</code></td>
+<td>Heading within the title.</td>
+</tr>
+<tr class="odd">
+<td><code>section_of_heading:</code></td>
+<td>Section within the heading.</td>
+</tr>
+<tr class="even">
+<td><code>paragraph_of_section:</code></td>
+<td>Paragraph within the section.</td>
+</tr>
+<tr class="odd">
+<td><code>amount_mil_usd:</code></td>
+<td>Amount of appropriation in millions of dollars.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="us-aid-timeline" class="level1">
+<h1>US Aid Timeline</h1>
+<section id="us_aid_timeline.csv" class="level4">
+<h4 class="anchored" data-anchor-id="us_aid_timeline.csv">us_aid_timeline.csv</h4>
+<hr>
+<p><strong>File name:</strong> us_aid_timeline.csv</p>
+<p><strong>Date created:</strong> 2023-11-12</p>
+<p><strong>Author:</strong> Ian Milko</p>
+<p><strong>Data source:</strong> <a href="https://www.congress.gov/search?pageSort=latestAction%3Adesc&amp;q=%7B%22search%22%3A%22ukraine%22%2C%22bill-status%22%3A%22law%22%2C%22congress%22%3A%5B%22118%22%2C%22117%22%5D%7D&amp;s=2" class="uri">https://www.congress.gov/search?pageSort=latestAction%3Adesc&amp;q=%7B%22search%22%3A%22ukraine%22%2C%22bill-status%22%3A%22law%22%2C%22congress%22%3A%5B%22118%22%2C%22117%22%5D%7D&amp;s=2</a></p>
+<p><strong>Data last updated:</strong> 2023-11-12</p>
+<p><strong>Description:</strong> This small dataset was compiled by scouring all congressional legislation regarding Ukraine in the period since Russia’s invasion in February 2022. The amounts were taken from a combination of Congressional Budget Office (CBO) reports for each particular bill, as well as text from the bill itself when a finer distinction was needed. Additional efforts were made to ensure that only funds allocated to Ukraine were included in the dataset. Funds that were not explicitly allocated to the situation in Ukraine were not inlcuded in this dataset. For that reason, the amounts in some of these variables may not agree with the amounts given in CBO reports. Additionally, any person who takes an interest in these CBO reports should take care to consider the correct report; it takes a long time for a bill to go from introduction to becoming law, with many changes throught the process, including changes to the amount of funds, allocation of funds, and even the short title of the bill itself. As such, multiple CBO reports have been generated and only one of those is current.</p>
+<p><strong>Data dictionary:</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Date Became Law</code></td>
+<td>The date the particular bill was signed by the President</td>
+</tr>
+<tr class="even">
+<td><code>Type of document</code></td>
+<td>What kind of bill was originally introduced</td>
+</tr>
+<tr class="odd">
+<td><code>ID number</code></td>
+<td>Bill number or other identification</td>
+</tr>
+<tr class="even">
+<td><code>Total outlays (mil USD)</code></td>
+<td>Total estimated amount of money appropriated to the situation in Ukraine that will be payed out in millions of dollars</td>
+</tr>
+<tr class="odd">
+<td><code>Outlays 2023 (mil USD)</code></td>
+<td>Estimated outlays in 2023 in millions of dollars</td>
+</tr>
+<tr class="even">
+<td><code>Defense total outlays (mil USD)</code></td>
+<td>Total estimated outlays by the Department of Defense in millions of dollars</td>
+</tr>
+<tr class="odd">
+<td><code>Defense outlays 2023 (mil USD)</code></td>
+<td>Estimated outlays by the Department of Defense for 2023 in millions of dollars</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

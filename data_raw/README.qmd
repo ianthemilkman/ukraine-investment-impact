@@ -1,0 +1,70 @@
+---
+title: "Data README"
+date: last-modified
+format:
+  html:
+    toc: true
+    theme: zephyr
+---
+
+# Additional Ukraine Supplemental Appropriations Act, 2022
+
+#### appropriations_hr7691_data.csv
+
+---
+
+**File name:** appropriations_hr7691_data.csv
+
+**Date created:** 2023-11-10
+
+**Author:** Ian Milko
+
+**Data source:** <https://www.congress.gov/117/plaws/publ128/PLAW-117publ128.pdf>
+
+**Data last updated:** 2022-05-21
+
+**Description:** A summary of all funding appropriations relevant to the Ukraine conflict found in H.R. 7691 - Additional Ukraine Supplemental Appropriations Act, 2022. The data was compiled by reading through the bill and thus categorizing each amount by the title number within the bill, the heading within the title, the name of the section within the heading, and name of the paragraph within the section. Three entries from the bill were omitted from the dataset due to their lack of relevance to Ukrainian aid. These omitted entries totaled $170,174,000, which I regard as insignificant considering the total appropriations in the bill sum to over $40,000,000,000. 
+
+**Data dictionary:**
+
+|Variable                 |Description                                     |
+|-------------------------|------------------------------------------------|
+|`title:`                 |Title number within bill.                       |
+|`heading_of_title:`      |Heading within the title.                       |
+|`section_of_heading:`    |Section within the heading.                     |
+|`paragraph_of_section:`  |Paragraph within the section.                   |
+|`amount_mil_usd:`        |Amount of appropriation in millions of dollars. |
+
+
+# US Aid Timeline
+
+#### us_aid_timeline.csv
+
+---
+
+**File name:** us_aid_timeline.csv
+
+**Date created:** 2023-11-12
+
+**Author:** Ian Milko
+
+**Data source:** <https://www.congress.gov/search?pageSort=latestAction%3Adesc&q=%7B%22search%22%3A%22ukraine%22%2C%22bill-status%22%3A%22law%22%2C%22congress%22%3A%5B%22118%22%2C%22117%22%5D%7D&s=2>
+
+**Data last updated:** 2023-11-12
+
+**Description:** This small dataset was compiled by scouring all congressional legislation regarding Ukraine in the period since Russia's invasion in February 2022. The amounts were taken from a combination of Congressional Budget Office (CBO) reports for each particular bill, as well as text from the bill itself when a finer distinction was needed. Additional efforts were made to ensure that only funds allocated to Ukraine were included in the dataset. Funds that were not explicitly allocated to the situation in Ukraine were not inlcuded in this dataset. For that reason, the amounts in some of these variables may not agree with the amounts given in CBO reports. Additionally, any person who takes an interest in these CBO reports should take care to consider the correct report; it takes a long time for a bill to go from introduction to becoming law, with many changes throught the process, including changes to the amount of funds, allocation of funds, and even the short title of the bill itself. As such, multiple CBO reports have been generated and only one of those is current.
+
+**Data dictionary:**
+
+|Variable|Description|
+|---------|-----------|
+|`Date Became Law`|The date the particular bill was signed by the President|
+|`Type of document`|What kind of bill was originally introduced|
+|`ID number`|Bill number or other identification|
+|`Total outlays (mil USD)`|Total estimated amount of money appropriated to the situation in Ukraine that will be payed out in millions of dollars|
+|`Outlays 2023 (mil USD)`|Estimated outlays in 2023 in millions of dollars|
+|`Defense total outlays (mil USD)`|Total estimated outlays by the Department of Defense in millions of dollars|
+|`Defense outlays 2023 (mil USD)`|Estimated outlays by the Department of Defense for 2023 in millions of dollars|
+
+
+

@@ -1,0 +1,15 @@
+---
+title: "Using GitHub"
+author: "Ian Milko"
+format:
+  html:
+    theme: zephyr
+---
+
+## 1: GitHub initialization
+
+First, create an [account](https://github.com/join) on GitHub. Be sure to share your username with the creator/owner of the repository so that they can add you as a collaborator.
+
+Next, install [Git](https://git-scm.com/downloads), choosing the download for your operating system and go through the installation wizard. Most of the recommended / default options will be best, but **make sure you select "Checkout as-is, commit Unix-style line endings."** This just ensures some cross-platform compatibility. If you miss this it's probably fine, it will just give you some (mostly harmless) warnings on some commits to the effect of "Converting LF to CRLF." 
+
+
