@@ -1,0 +1,73 @@
+---
+title: "Casualties"
+author: "Ian Milko"
+date: last-modified
+format:
+  html:
+    toc: true
+    code-fold: true
+    theme: zephyr
+    code-tools: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+#start
+
+library(tidyverse)
+library(here)
+library(cowplot)
+library(janitor)
+library(lubridate)
+
+knitr::opts_chunk$set(
+    warning = FALSE,
+    message = FALSE,
+    comment = "#>",
+    fig.path = "figs/",
+    fig.width = 13,
+    fig.height = 8,
+    fig.retina = 3
+)
+
+#end
+```
+
+```{r}
+#start
+
+cas_equip_df <- read_csv(here('data_raw', 'kaggle_cas', 'russia_losses_equipment.csv'))
+# glimpse(cas_equip_df)
+
+clean_cas_equip <- cas_equip_df %>%
+    clean_names()
+# glimpse(clean_cas_equip)
+
+major_equip <- clean_cas_equip %>%
+    select(date, day, aircraft, helicopter, tank, apc, field_artillery) %>%
+    mutate(chng_tank = tank - lag(tank, default = 0)) %>%
+    ggplot() +
+    geom_col(aes(x = week(date), y = chng_tank))
+major_equip
+
+#end
+```
+
+```{r}
+#start
+
+cas_pers_df <- read_csv(here('data_raw', 'kaggle_cas', 'russia_losses_personnel.csv'))
+
+cas_pers_clean <- cas_pers_df %>%
+    clean_names() %>%
+    select(-personnel_2)
+cas_pers_clean
+
+cas_pers_clean %>%
+    ggplot() +
+    geom_col(aes(x = week(date), y = personnel / 10^6))
+
+#end
+```
+
