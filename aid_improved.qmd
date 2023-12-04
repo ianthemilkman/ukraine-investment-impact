@@ -41,7 +41,7 @@ plotSave <- function(name, chart) {
 
 ```
 
-# Aid Committed by Country
+# Aid Leaders Timeline
 
 Data source: <https://www.ifw-kiel.de/publications/ukraine-support-tracker-data-20758/>
 
@@ -55,47 +55,62 @@ aid_data_csv <- read_csv(here('data_raw', 'World Wide Aid.csv')) %>%
 
 aid_csv <- aid_data_csv %>%
     select(countries, announcement_date, total) %>%
+    mutate(date = gsub("[^0-9/]", "", announcement_date)) %>%
     mutate(total = parse_number(total),
-        date = mdy(announcement_date)) %>%
+        date = mdy(date)) %>%
     filter(!is.na(date) & !is.na(total)) %>%
-    mutate(aid_inter = date - min(date)) %>%
     select(-announcement_date)
-aid_csv
 
 aid_group <- aid_csv %>%
-    select(-aid_inter) %>%
     complete(countries, date = seq(min(date), max(date), by = "1 day")) %>%
     mutate(total = replace_na(total, 0)) %>%
     group_by(countries) %>%
     arrange(countries, date) %>%
     fill(total, .direction = 'down') %>%
-    mutate(cuml_tot = cumsum(total)) %>%
+    mutate(cuml_tot = cumsum(total) / 10^9) %>%
     ungroup() %>%
     group_by(date) %>%
     mutate(
         rank = rank(-cuml_tot, ties.method = "first"),
         val_lbl = paste0(" ", round(cuml_tot / 10^6))
-    ) %>%
+        ) %>%
     filter(rank <= 10) %>%
     ungroup() %>%
     mutate(war_day = as.integer(date - min(date)))
-aid_group
 
 aid_group_plot <- aid_group %>%
     ggplot(aes(x = rank, group = countries)) +
     geom_tile(aes(y = cuml_tot / 2, height = cuml_tot), width = 0.9) +
     geom_text(aes(y = 0, label = paste(countries, " ")), vjust = 0.2, hjust = 1) +
-    coord_flip() +
-    theme_minimal_vgrid() +
+    coord_flip(clip = "off", expand = TRUE) +
+    scale_x_reverse() +
+    scale_y_continuous(expand = expansion(mult = c(0.3, 0)),
+        labels = scales::comma) +
     transition_time(war_day) +
     view_follow(fixed_x = TRUE) +
     labs(
-        x = "cumulative total",
+        y = "Cumulative Military Aid Committed (billions USD)",
         title = "Day: {frame_time}"
-        )
-aid_group_plot   
+        ) +
+    theme_minimal_vgrid() +
+    theme(
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank()
+    )
 
+animate(aid_group_plot, duration = 20, end_pause = 10,
+    width = 10, height = 6, unit = "in", res = 150,
+    renderer = magick_renderer())
 
+#end
+```
+
+# Total Committed Aid Leaders
+
+Data source: <https://www.ifw-kiel.de/publications/ukraine-support-tracker-data-20758/>
+
+```{r}
+#start
 
 aid_data <- read_xlsx(here('data_raw', 'world_wide_aid_2.xlsx'), sheet = "Bilateral Assistance, MAIN DATA", range = cell_cols("A:T")) %>%
     tibble() %>%
@@ -104,8 +119,6 @@ aid_data <- read_xlsx(here('data_raw', 'world_wide_aid_2.xlsx'), sheet = "Bilate
     rename(val_cmtd_usd = value_committed_own_estimate_in_usd) %>%
     mutate(amt_dlvrd_usd = as.numeric(val_dlvrd_usd),
         amt_cmtd_usd = as.numeric(val_cmtd_usd))
-
-glimpse(aid_data)
 
 aid2 <- aid_data %>%
     filter(!is.na(amt_cmtd_usd)) %>%
@@ -129,34 +142,27 @@ aid2_plot <- aid2 %>%
             y = reorder(countries, total_by_country)
             )) +
     labs(
-        x = "Total Military Aid Commited (Billions of $)",
+        x = "Total Military Aid Commited (billions USD)",
         y = "",
         title = "Committed Foreign Military Aid to Ukraine",
         subtitle = "Top 10 Countries"
         ) +
-    theme_bw()
+    theme_minimal_vgrid()
 aid2_plot
 
 #end
 ```
 
-# Aid Timeline
-
-```{r}
-#start
-
-timeline <- read_csv(here('data_raw', 'us_aid_timeline.csv'))
-
-#end
-```
-
-# Maybe: Aid Delivered by Country
-
-Data source: `World Wide Aid.csv`
 
 ```{r}
 #| label: aid-plot-1
+#| include: false
 #start
+
+## Maybe: Aid Delivered by Country
+
+#Data source: `World Wide Aid.csv`
+
 
 aid <- read.csv(here('data_raw','World Wide Aid.csv'))
 
